@@ -15,7 +15,7 @@ Parse.Cloud.define("hello", function(request, response) {
 });
 
 Parse.Cloud.define("scrapeWebPage", function(request, response) {
-	var myUrl = request.params.url;
+	var myUrl = process.env.URL;
 	console.log("URL: " + myUrl);
 	
 	Parse.Cloud.httpRequest({
