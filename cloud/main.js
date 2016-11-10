@@ -11,5 +11,21 @@ var SERVER_URL = process.env.SERVER_URL;
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
 Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello World from " + process.env.APP_NAME);
+	response.success("Hello World from " + process.env.APP_NAME);
+});
+
+Parse.Cloud.define("scrapeWebPage", function(request, response) {
+	var myUrl = request.params.url;
+	console.log("URL: " + myUrl);
+	
+	Parse.Cloud.httpRequest({
+		url: myUrl
+	}).then(function(httpResponse) {
+		// success
+		console.log(httpResponse.text);
+		response.success("success");
+	},function(httpResponse) {
+		// error
+		console.error('Request failed with response code ' + httpResponse.status);
+	});
 });
