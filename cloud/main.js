@@ -32,10 +32,22 @@ Parse.Cloud.define("scrapeWebPage", function(request, response) {
 });
 
 Parse.Cloud.define("testRequestPromise1", function(request, response) {
+	var options = {
+			uri: 'https://api.github.com/user/repos',
+			qs: {
+				access_token: '0ed7b8ae84c30a720e69b54e1fab1ecaa45fae6c' // -> uri + '?access_token=xxxxx%20xxxxx' 
+			},
+			headers: {
+				'User-Agent': 'Request-Promise'
+			},
+			json: true // Automatically parses the JSON string in the response 
+	};
+	
+	
 	var myUrl = process.env.URL;
 	console.log("URL: " + myUrl);
 	
-	rp(myUrl).then(function (htmlString) {
+	rp(options).then(function (htmlString) {
 		console.log(htmlString);
 		response.success("success");
 	}).catch(function (err) {
