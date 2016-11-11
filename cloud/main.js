@@ -32,7 +32,10 @@ Parse.Cloud.define("scrapeWebPage", function(request, response) {
 });
 
 Parse.Cloud.define("testRequestPromise1", function(request, response) {
-	rp('http://www.google.com').then(function (htmlString) {
+	var myUrl = process.env.URL;
+	console.log("URL: " + myUrl);
+	
+	rp(myUrl).then(function (htmlString) {
 		console.log(htmlString);
 		response.success("success");
 	}).catch(function (err) {
