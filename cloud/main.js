@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var schedule = require('node-schedule');			// https://www.npmjs.com/package/node-schedule
+var rp = require('request-promise');
 
 var SUPERUSER = process.env.SUPER_USER;
 var SUPERPASSWORD = process.env.SUPER_USER_PASS;
@@ -29,3 +30,13 @@ Parse.Cloud.define("scrapeWebPage", function(request, response) {
 		console.error('Request failed with response code ' + httpResponse.status);
 	});
 });
+
+Parse.Cloud.define("testRequestPromise1", function(request, response) {
+	rp('http://www.google.com').then(function (htmlString) {
+		console.log(htmlString);
+		response.success("success");
+	}).catch(function (err) {
+		console.error('Request failed with error: ' + err);
+	});
+});
+
